@@ -1,28 +1,24 @@
-#include <boost/asio.hpp>
+#define CPPHTTPLIB_OPENSSL_SUPPORT
+#include "vendor/httplib.h"
 #include <iostream>
 
 int main() {
-  boost::asio::io_context io_context;
+    httplib::Server svr;
 
-  boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::address::from_string("https://00da8604-92f0-4718-a7e0-f972c492dbd4-00-hdletiih8ftf.pike.replit.dev/"), 8080);
+    svr.Get("/api/greet", [](const httplib::Request &, httplib::Response &res) {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_content("{\"message\": \"Hello from C++ backend!\"}", "application/json");
+    });
 
-  boost::asio::ip::tcp::socket client_socket(io_context); 
-  client_socket.connect(endpoint);
+    svr.Options("/api/greet", [](const httplib::Request &, httplib::Response &res) {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+        res.status = 204; // No Content
+    });
 
-  std::string message = "Hello from client!";
-  std::cout << "Client sending: " << message << std::endl; // Print the message being sent
+    std::cout << "Server started on port 8080..." << std::endl;
+    svr.listen("0.0.0.0", 8080);
 
-  boost::asio::write(client_socket, boost::asio::buffer(message));
-
-  char client_data[1024];
-  boost::system::error_code error;
-  size_t length = client_socket.read_some(boost::asio::buffer(client_data), error);
-
-  if (!error) {
-    std::cout << "Client received: " << std::string(client_data, length) << std::endl;
-  } else {
-    std::cerr << "Client error: " << error.message() << std::endl;
-  }
-
-  return 0;
+    return 0;
 }

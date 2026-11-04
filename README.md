@@ -47,3 +47,7 @@ This project consists of a C++ backend server and a React UI frontend.
 
 *   The C++ server needs to be running for the React UI to fetch data successfully.
 *   CORS (Cross-Origin Resource Sharing) has been configured on the C++ server to allow requests from `http://localhost:3000` (or any origin via `*` for development).
+
+## Isolated verification
+
+The backend accepts an optional decimal port: `./main 0` binds a free port and prints it only after bind succeeds. The default remains 8080. Set `REACT_APP_API_BASE_URL=http://127.0.0.1:<printed-port>` when building/starting the UI against a different backend port. See `.cursor/skills/verify-cpp-react/SKILL.md` for actual HTTP and phone/desktop success/failure verification, cleanup and remaining dependency-audit limits.

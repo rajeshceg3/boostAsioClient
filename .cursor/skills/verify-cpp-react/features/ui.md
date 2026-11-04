@@ -1,0 +1,9 @@
+# React success and failure
+## Sub-features
+Loadingtext, realAPIgreeting, networkfailuretext, responsivecenteredview.
+## How to get to it (user POV)
+Build/startReactwithREACT_APP_API_BASE_URL whenbackendisn'tdefaultlocalhost8080. OpenUI, waitforrequest. Backendunavailablegivesexplicitfailuretext.
+## Driving it with verify.py
+ActualproductionbuildwithownedAPIport, browser390/1365actualsuccess. Stopownedbackend,reloadsamebuild andassertfailureatbothwidths. Pixelcapturesrequireinspection. SupplementalJestAxiosmockprovesloading/success/failurewithoutESMimportfailure.
+## Gotchas
+OriginaltemplateJestexpectednonexistentLearnReactlink andAxiosESMfailedbeforeassertions. Repairedtestsnameactualbehavior; mockingdoesnotreplaceactualbrowserproof. OriginalAppCSSwasneverimported, nowappliedforreadablecenteredtext. APIbaseisbuildtime,notruntimeparameter. Audit69inheritedfindingsremain; noforceupgrade/gatebypass. Nopersistentdata/authorproductsideeffects.

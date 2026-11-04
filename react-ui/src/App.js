@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 
 function App() {
   const [message, setMessage] = useState('Loading...');
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/greet')
+    axios.get(`${process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080'}/api/greet`)
       .then(response => {
         setMessage(response.data.message);
       })
